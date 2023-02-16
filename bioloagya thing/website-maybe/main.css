@@ -46,7 +46,7 @@ ul {
     width: 50px;
 }
 
-.submit-button {
+#submit-button {
     background: var(--btnBg);
     color: var(--btnFontColor);
     height: 25px;

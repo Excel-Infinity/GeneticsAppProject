@@ -23,7 +23,7 @@ switcher.addEventListener('click', function() {
     console.log('Theme switched');
 });
 
-const submit = document.querySelector('.submit-button');
+const submit = document.getElementById('submit-button');
 const ind = document.querySelector('#ind');
 const gens = document.querySelector('#gens');
 const p = document.querySelector('#p');
