@@ -4,11 +4,37 @@
     <title>Test Canvas</title>
     <style>
       canvas {
-	  border: 1px solid black;
+          border: 1px solid black;
+      }
+
+      .error-messenger {
+          color: red;
+          font-size: 30;
+          background-color: black;
       }
     </style>
   </head>
   <body>
-    <script src="main.js"></script>
+    <label for="numRecessive">aa:</label>
+    <input type="number" id="numRecessive" />
+    <br />
+    <label for="numHeterozygous">Aa:</label>
+    <input type="number" id="numHeterozygous" />
+    <br />
+    <label for="numDominant">AA:</label>
+    <input type="number" id="numDominant" />
+    <br />
+    <button id="update-button">Update</button>
+    <br /><br />
+
+    <bar-graph id="bar-graph" values="500,1000,750" labels="aa,Aa,AA"></bar-graph>
+
+    <script type="module" src="main.js"></script>
+    <script type="module" src="bar-graph-elem.js"></script>
+    <script type="text/javascript">
+      document.getElementById("numRecessive").value = 500;
+      document.getElementById("numHeterozygous").value = 1000;
+      document.getElementById("numDominant").value = 750;
+    </script>
   </body>
 </html>
