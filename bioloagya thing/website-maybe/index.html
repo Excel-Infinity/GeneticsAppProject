@@ -9,9 +9,12 @@
     </head>
     <body class="dark-theme">
         <h1>sdfasdf header 1</h1>
-        <p id="graph">graph (todo!!!!!)</p>
-	<bar-graph id="bar-graph" values="500,1000,750" labels="aa,Aa,AA"></bar-graph>
-        <ul>
+        <p id="graph">graph</p>
+		<bar-graph id="bar-graph" values="0,0,0" labels="aa,Aa,AA"></bar-graph>
+		<br>
+		Predicted:<br>
+		<bar-graph id="predictive-graph" values="0,0,0" labels="aa,Aa,AA"></bar-graph>
+		<ul>
             <li class="thing">thing 1 (d %)</li>
             <li class="thing">thing 2 (r %)</li>
             <li>uhh something else</li>
@@ -20,26 +23,15 @@
         <form class="inputs">
             <label for="ind">Individuals (1 to 1 million)</label>
             <input type="number" id="ind" name="ind" min="1" max="1000000"><br>
-            <label for="gens">Generations (1 to 100)</label>
-            <input type="number" id="gens" name="gens" min="1" max="100" ><br>
             <label for="p">Starting p (0 to 1)</label>
             <input type="number" id="p" name="p" min="0" max="1" step="any"><br>
-            <label for="q">Starting q (0 to 1)</label>
-            <input type="number" id="q" name="q" min="0" max="1" step="any"><br>
-            <label for="natsel">Natural Selection</label><br>
-            <label for="natsel">HD survival rate (%)</label>
-            <input type="number" id="hd" name="hd" min="0" max="100" step="any"><br>
-            <label for="natsel">HE survival rate (%)</label>
-            <input type="number" id="he" name="he" min="0" max="100" step="any"><br>
-            <label for="natsel">HR survival rate (%)</label>
-            <input type="number" id="hr" name="hr" min="0" max="100" step="any"><br>
-	    <button id="submit-button" type="button">Submit</button>
+			<button id="pool-button" type="button">Generate Pool</button>
         </form>
         <div>
             <button class="theme-button">Light Theme</button>
         </div>
-        <script src="app.js"></script>
-	<script type="module" src="bar-graph-elem.js"></script>
+        <script type="module" src="app.js"></script>
+		<script type="module" src="bar-graph-elem.js"></script>
         <noscript>why don't you have js..</noscript>
     </body>
 </html>

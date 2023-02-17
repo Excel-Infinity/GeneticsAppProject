@@ -1,9 +1,9 @@
-'use strict';
+import { generate_pool } from "./gene-pool.js";
 
 function allValid() {
     var args = arguments;
     for (var i = 0; i < args.length; i++) {
-        if (args[i] < args[i].min || args[i] > args[i].max) {
+        if (parseFloat(args[i].value) < parseFloat(args[i].min) || parseFloat(args[i].value) > parseFloat(args[i].max)) {
             return false;
         }
     }
@@ -23,24 +23,27 @@ switcher.addEventListener('click', function() {
     console.log('Theme switched');
 });
 
-const submit = document.getElementById('submit-button');
-const ind = document.querySelector('#ind');
-const gens = document.querySelector('#gens');
-const p = document.querySelector('#p');
-const q = document.querySelector('#q');
-// natsel (survival percentage)
-const hd = document.querySelector('#hd');
-const he = document.querySelector('#he');
-const hr = document.querySelector('#hr');
 
-submit.addEventListener('click', function() {
-    console.log('Submit button clicked');
-    console.log('ind: ' + ind.value);
-    console.log('gens: ' + gens.value);
-    console.log('p: ' + p.value);
-    console.log('q: ' + q.value);
-    console.log('hd: ' + hd.value);
-    console.log('he: ' + he.value);
-    console.log('hr: ' + hr.value);
-    console.log('any out of bounds: ' + !allValid(ind, gens, p, q, hd, he, hr));
+const pool_button = document.getElementById('pool-button');
+const ind_input = document.getElementById('ind');
+const p_input = document.getElementById('p');
+const bar_graph = document.getElementById("bar-graph");
+const predictive_graph = document.getElementById("predictive-graph");
+
+// Note: the other inputs should be added back here
+
+pool_button.addEventListener("click", () => {
+	if (!allValid(ind_input, p_input)) {
+		// Temp. error-checking
+		alert(":( Invalid inputs");
+		return;
+	}
+
+	const ind = parseInt(ind_input.value);
+	const p = parseFloat(p_input.value);
+	const q = 1 - p;
+
+	const gene_pool = generate_pool(p, ind);
+	bar_graph.values = [gene_pool.num_recessive, gene_pool.num_heterozygous, gene_pool.num_dominant];
+	predictive_graph.values = [q * q * ind, 2 * p * q * ind, p * p * ind].map(Math.round);
 });
