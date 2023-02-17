@@ -2,52 +2,69 @@ function random(a, b) {
     return Math.floor(Math.random() * (b - a + 1)) + a;
 }
 
-function run() {
-    var numGens = 25;
-    var natSel = [10, 30, 90]; // in percent
-    var gens = new Array();
-    var ind = 5000000;
-    var d = random(0, ind * 2);
-    var r = ind * 2 - d;
-    for (var i = 0; i < numGens; i++) {
-        // theoretical
-        var p = d / (d + r);
-        var q = r / (d + r);
-        var thd = p * p * ind;
-        var the = 2 * p * q * ind;
-        var thr = q * q * ind;
-        // experimental
+function run(numIndividuals, pFloat, numGenerations, naturalSelection) {
+    var ind = numIndividuals;
+    var p = pFloat;
+    var q = 1 - p;
+    var d = p * ind;
+    var r = q * ind;
+    var gens = [[0, 0, 0]];
+    var numGens = numGenerations;
+    var natSel = [naturalSelection[0] * 100, naturalSelection[1] * 100, naturalSelection[2] * 100];
+    var why = true;
+    for (var i = 1; i < numGens; i++) {
         var dNew = d;
         var rNew = r;
-        var hd = 0, he = 0, hr = 0; // num individuals (not percent)
+        var dom = 0, hetero = 0, rec = 0;
         for (var j = 0; j < ind; j++) {
             var g1 = random(0, dNew + rNew - 1) < dNew ? 1 : 0;
             var g2 = random(0, dNew + rNew - 1) < dNew ? 1 : 0;
             var gSum = g1 + g2;
-            if (gSum == 0 && random(0, 100) <= natSel[2]) {
-                hr++;
-            } else if (gSum == 1 && random(0, 100) <= natSel[1]) {
-                he++;
-            } else if (gSum == 2 && random(0, 100) <= natSel[0]) {
-                hd++;
+            if (gSum == 0) {
+                if (random(0, 100) > natSel[2]) {
+                    rec++;
+                }
+                if (why) {
+                    gens[0][0]++;
+                }
+            } else if (gSum == 1) {
+                if (random(0, 100) > natSel[1]) {
+                    hetero++;
+                }
+                if (why) {
+                    gens[0][1]++;
+                }
+            } else if (gSum == 2) {
+                if (random(0, 100) > natSel[0]) {
+                    dom++;
+                }
+                if (why) {
+                    gens[0][2]++;
+                }
             }
             dNew -= gSum;
             rNew -= 2 - gSum;
         }
-        gens[i] = [[hd, he, hr], d / (d + r), r / (d + r)];
-        console.log(i + ":\t" + gens[i][0][0] + "\t" + gens[i][0][1] + "\t" + gens[i][0][2] + "\t" + gens[i][1] + "\t" + gens[i][2]);
-        d = 2 * hd + he;
-        r = 2 * hr + he;
+        why = false;
+        d = 2 * dom + hetero;
+        r = 2 * rec + hetero;
         // normalize d and r to ind
         d = Math.round(ind * d / (d + r));
         r = ind - d;
+        // normalize rec, hetero, dom to ind
+        var total = rec + hetero + dom;
+        rec = Math.round(ind * rec / total);
+        hetero = Math.round(ind * hetero / total);
+        dom = ind - rec - hetero;
+        gens[i] = [rec, hetero, dom];
     }
+    for (var i = 0; i < gens.length; i++) {
+        console.log(i + ":\t" + gens[i][0] + "\t" + gens[i][1] + "\t" + gens[i][2]);
+    }
+    return gens;
 }
 
-run();
-
-// MODIFY
 /*
 Parameters: individuals (integer), p (float 0-1), generations (integer), natsel rates (3 floats 0-1)
-Outputs: Array of gens; each gen is an array of 3 integers [# ind rec, het, dom]
+Outputs: Array of gens; each gen is an array of 3 integers [# ind rec, heterot, dom]
 */
