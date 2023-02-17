@@ -9,7 +9,7 @@
  */
 
 /**
- * @typedef {import("./gene_pool").GenePool} GenePool
+ * @typedef {import("./gene-pool").GenePool} GenePool
  */
 
 /**
