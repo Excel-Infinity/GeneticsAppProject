@@ -1,6 +1,10 @@
 // @ts-check
 
-import { draw_graph, update_graph } from "./bar-graph.js";
+import { draw_graph, update_graph, default_bar_graph_display_properties } from "./bar-graph.js";
+
+/**
+ * @typedef {import("./bar-graph.js").BarGraphDisplayProperties} BarGraphDisplayProperties
+ */
 
 class BarGraphElement extends HTMLElement {
     /** @type {CanvasRenderingContext2D} */
@@ -11,6 +15,9 @@ class BarGraphElement extends HTMLElement {
 
     /** @type {string[]} */
     #labels;
+
+    /** @type {BarGraphDisplayProperties} */
+    #display_props;
 
     get width() {
         const attr = this.getAttribute("width");
@@ -78,6 +85,8 @@ class BarGraphElement extends HTMLElement {
     constructor() {
         super();
 
+        this.#display_props = Object.assign({}, default_bar_graph_display_properties);
+
         const shadow = this.attachShadow({mode: "open"});
 
         const canvas = document.createElement("canvas");
@@ -131,11 +140,11 @@ class BarGraphElement extends HTMLElement {
      * @param {number[]} prev_values
      */
     #update(prev_values) {
-        update_graph(this.#ctx, this.#ctx.canvas.width, this.#ctx.canvas.height, this.#values, prev_values, this.#labels);
+        update_graph(this.#ctx, this.#ctx.canvas.width, this.#ctx.canvas.height, this.#values, prev_values, this.#labels, this.#display_props);
     }
 
     redraw() {
-        draw_graph(this.#ctx, this.#ctx.canvas.width, this.#ctx.canvas.height, this.#values, this.#labels);
+        draw_graph(this.#ctx, this.#ctx.canvas.width, this.#ctx.canvas.height, this.#values, this.#labels, this.#display_props);
     }
 }
 
