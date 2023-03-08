@@ -51,7 +51,6 @@ run_button.addEventListener("click", () => {
 
 	const ind = parseInt(ind_input.value);
 	const p = parseFloat(p_input.value);
-	const q = 1 - p;
 	const aa_chance = parseFloat(aa_chance_input.value) / 100;
 	const Aa_chance = parseFloat(Aa_chance_input.value) / 100;
 	const AA_chance = parseFloat(AA_chance_input.value) / 100;
