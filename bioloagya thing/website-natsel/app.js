@@ -38,7 +38,9 @@ const Aa_chance_input = document.getElementById('he-chance');
 const AA_chance_input = document.getElementById('hd-chance');
 /** @type {HTMLInputElement} */
 const num_gens_input = document.getElementById('num-gens');
-const bar_graph = document.getElementById("end-graph");
+
+const end_graph = document.getElementById("end-graph");
+const start_graph = document.getElementById("start-graph");
 
 // Note: the other inputs should be added back here
 
@@ -59,5 +61,6 @@ run_button.addEventListener("click", () => {
 
 	const gens = calcGensSelection(ind, p, num_gens, chances);
 	const last_gen = gens[gens.length - 1];
-	bar_graph.values = last_gen;
+	start_graph.values = gens[0];
+	end_graph.values = last_gen;
 });
