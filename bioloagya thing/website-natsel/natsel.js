@@ -2,6 +2,14 @@ function random(a, b) {
     return Math.floor(Math.random() * (b - a + 1)) + a;
 }
 
+/**
+ * @param {number} numIndividuals the number of individuals in the pool
+ * @param {number} pFloat the percent of alleles being dominant
+ * @param {number} numGenerations the number of generations to run
+ * @param {number[]} naturalSelection array form of survival chances (0-1) [aa chance, Aa chance, AA chance]
+ *
+ * @returns {number[][]} array of gen information, each element is of the form [num aa, num Aa, num AA]
+ */
 function calcGens(numIndividuals, pFloat, numGenerations, naturalSelection) {
     var ind = numIndividuals;
     var p = pFloat;
@@ -69,3 +77,5 @@ Parameters: (
 )
 Output: Array of gens; each gen is an array of 3 integers [# ind rec, # ind hetero, # ind dom]
 */
+
+export { calcGens };
