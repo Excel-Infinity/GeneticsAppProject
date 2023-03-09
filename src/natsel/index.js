@@ -53,9 +53,9 @@ run_button.addEventListener("click", () => {
 
 	const ind = parseInt(ind_input.value);
 	const p = parseFloat(p_input.value);
-	const aa_chance = parseFloat(aa_chance_input.value) / 100;
-	const Aa_chance = parseFloat(Aa_chance_input.value) / 100;
-	const AA_chance = parseFloat(AA_chance_input.value) / 100;
+	const aa_chance = parseFloat(aa_chance_input.value);
+	const Aa_chance = parseFloat(Aa_chance_input.value);
+	const AA_chance = parseFloat(AA_chance_input.value);
 	const num_gens = parseFloat(num_gens_input.value);
 	const chances = [aa_chance, Aa_chance, AA_chance];
 
