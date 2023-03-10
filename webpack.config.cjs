@@ -1,4 +1,5 @@
 const path = require("path");
+const LicensePlugin = require("webpack-license-plugin");
 
 module.exports = {
 	mode: "production",
@@ -10,5 +11,8 @@ module.exports = {
 	output: {
 		path: path.resolve(__dirname, "website"),
 		filename: '[name].js',
-	}
+	},
+	plugins: [
+		new LicensePlugin()
+	]
 };

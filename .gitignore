@@ -1,4 +1,5 @@
 .DS_Store
 *~
-node_modules/
-website/*.js
+/node_modules/
+/website/*.js
+/website/oss-licenses.json
