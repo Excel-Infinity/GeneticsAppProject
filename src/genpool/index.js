@@ -15,7 +15,7 @@ function allValid(...inputs) {
     return true;
 }
 
-const switcher = /** @type {HTMLElement} */ (document.querySelector('.theme-button'));
+const switcher = /** @type {HTMLElement} */ (document.querySelector('#theme-button'));
 
 switcher.addEventListener('click', function() {
     document.body.classList.toggle('light-theme');

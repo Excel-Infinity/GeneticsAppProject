@@ -1,46 +1,42 @@
 import { calcGens as calcGensSelection } from "./natsel.js";
+import BarGraphElem from "../bar-graph/bar-graph-elem.js"
 
-function allValid() {
-    var args = arguments;
-    for (var i = 0; i < args.length; i++) {
-        if (parseFloat(args[i].value) < parseFloat(args[i].min) || parseFloat(args[i].value) > parseFloat(args[i].max)) {
+/**
+ * @param {HTMLInputElement[]} inputs
+ */
+function allValid(...inputs) {
+    for (var i = 0; i < inputs.length; i++) {
+        if (parseFloat(inputs[i].value) < parseFloat(inputs[i].min) || parseFloat(inputs[i].value) > parseFloat(inputs[i].max)) {
             return false;
         }
     }
     return true;
 }
 
-const switcher = document.querySelector('.theme-button');
+const switcher = /** @type {HTMLElement} */ (document.getElementById("theme-button"));
 
-switcher.addEventListener('click', function() {
-    document.body.classList.toggle('light-theme');
-    document.body.classList.toggle('dark-theme');
-    if (document.body.classList.contains('light-theme')) {
-        switcher.textContent = 'Dark Theme';
+switcher.addEventListener("click", function() {
+    document.body.classList.toggle("light-theme");
+    document.body.classList.toggle("dark-theme");
+    if (document.body.classList.contains("light-theme")) {
+        switcher.textContent = "Dark Theme";
     } else {
-        switcher.textContent = 'Light Theme';
+        switcher.textContent = "Light Theme";
     }
-    console.log('Theme switched');
+    console.log("Theme switched");
 });
 
-/** @type {HTMLButtonElement} */
-const run_button = document.getElementById('run-button');
 
-/** @type {HTMLInputElement} */
-const ind_input = document.getElementById('ind');
-/** @type {HTMLInputElement} */
-const p_input = document.getElementById('p');
-/** @type {HTMLInputElement} */
-const aa_chance_input = document.getElementById('hr-chance');
-/** @type {HTMLInputElement} */
-const Aa_chance_input = document.getElementById('he-chance');
-/** @type {HTMLInputElement} */
-const AA_chance_input = document.getElementById('hd-chance');
-/** @type {HTMLInputElement} */
-const num_gens_input = document.getElementById('num-gens');
+const run_button      = /** @type {HTMLButtonElement} */ (document.getElementById("run-button"));
+const ind_input       = /** @type {HTMLInputElement} */  (document.getElementById("ind"));
+const p_input         = /** @type {HTMLInputElement} */  (document.getElementById("p"));
+const aa_chance_input = /** @type {HTMLInputElement} */  (document.getElementById("hr-chance"));
+const Aa_chance_input = /** @type {HTMLInputElement} */  (document.getElementById("he-chance"));
+const AA_chance_input = /** @type {HTMLInputElement} */  (document.getElementById("hd-chance"));
+const num_gens_input  = /** @type {HTMLInputElement} */  (document.getElementById("num-gens"));
 
-const end_graph = document.getElementById("end-graph");
-const start_graph = document.getElementById("start-graph");
+const end_graph   = /** @type {BarGraphElem} */ (document.getElementById("end-graph"));
+const start_graph = /** @type {BarGraphElem} */ (document.getElementById("start-graph"));
 
 // Note: the other inputs should be added back here
 
