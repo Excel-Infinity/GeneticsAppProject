@@ -3,3 +3,4 @@
 /node_modules/
 /website/*.js
 /website/oss-licenses.json
+/website/*.LICENSE.txt
