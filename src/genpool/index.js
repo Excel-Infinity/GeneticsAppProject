@@ -1,5 +1,3 @@
-// @ts-check
-
 import { generate_pool } from "./gene-pool.js";
 import { create_pool_chart } from "./create-chart.js";
 import { Chart } from "chart.js";
@@ -42,6 +40,9 @@ var results_chart = null;
 
 /** @type {Chart | null} */
 var predictive_chart = null;
+
+results_canvas.height = 0;
+predictive_canvas.height = 0;
 
 pool_button.addEventListener("click", () => {
 	if (!allValid(ind_input, p_input)) {

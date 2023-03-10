@@ -1,5 +1,3 @@
-// @ts-check
-
 /**
  * @typedef {Object} GenePool
  * @property {number} num_recessive    the number of homozygous-recessive individuals in the pool

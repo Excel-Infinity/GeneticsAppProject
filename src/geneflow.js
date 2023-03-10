@@ -1,4 +1,3 @@
-// @ts-check
 /**
  * @param {number} a lower bound
  * @param {number} b upper bound

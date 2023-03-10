@@ -1,5 +1,3 @@
-// @ts-check
-
 /**
  * @typedef {Object} BarGraphDisplayProperties
  * @property {number} label_height the height of the labels section of the bar graph

@@ -1,5 +1,3 @@
-// @ts-check
-
 import { draw_graph, update_graph, default_bar_graph_display_properties } from "./bar-graph.js";
 
 /**
