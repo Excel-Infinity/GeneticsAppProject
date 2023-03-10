@@ -26,6 +26,7 @@
     "webpack-license-plugin": "^4.2.2"
   },
   "dependencies": {
-    "chart.js": "^4.2.1"
+    "chart.js": "^4.2.1",
+    "chartjs-plugin-datalabels": "^2.2.0"
   }
 }

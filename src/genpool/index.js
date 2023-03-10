@@ -1,16 +1,23 @@
-import { generate_pool } from "./gene-pool.js";
+// @ts-check
 
-function allValid() {
-    var args = arguments;
-    for (var i = 0; i < args.length; i++) {
-        if (parseFloat(args[i].value) < parseFloat(args[i].min) || parseFloat(args[i].value) > parseFloat(args[i].max)) {
+import { generate_pool } from "./gene-pool.js";
+import { create_pool_chart } from "./create-chart.js";
+import { Chart } from "chart.js";
+
+/**
+ * @param {HTMLInputElement[]} inputs
+ */
+function allValid(...inputs) {
+    for (const input of inputs) {
+        if (parseFloat(input.value) < parseFloat(input.min) || parseFloat(input.value) > parseFloat(input.max)) {
             return false;
         }
     }
+
     return true;
 }
 
-const switcher = document.querySelector('.theme-button');
+const switcher = /** @type {HTMLElement} */ (document.querySelector('.theme-button'));
 
 switcher.addEventListener('click', function() {
     document.body.classList.toggle('light-theme');
@@ -24,13 +31,17 @@ switcher.addEventListener('click', function() {
 });
 
 
-const pool_button = document.getElementById('pool-button');
-const ind_input = document.getElementById('ind');
-const p_input = document.getElementById('p');
-const bar_graph = document.getElementById("bar-graph");
-const predictive_graph = document.getElementById("predictive-graph");
+const pool_button       = /** @type {HTMLButtonElement} */ (document.getElementById('pool-button'));
+const ind_input         = /** @type {HTMLInputElement} */  (document.getElementById('ind'));
+const p_input           = /** @type {HTMLInputElement} */  (document.getElementById('p'));
+const results_canvas    = /** @type {HTMLCanvasElement} */ (document.getElementById("results-graph"));
+const predictive_canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("predictive-graph"));
 
-// Note: the other inputs should be added back here
+/** @type {Chart | null} */
+var results_chart = null;
+
+/** @type {Chart | null} */
+var predictive_chart = null;
 
 pool_button.addEventListener("click", () => {
 	if (!allValid(ind_input, p_input)) {
@@ -39,11 +50,24 @@ pool_button.addEventListener("click", () => {
 		return;
 	}
 
+	if (results_chart === null) {
+		results_chart = create_pool_chart(results_canvas);
+	}
+
+	if (predictive_chart === null) {
+		predictive_chart = create_pool_chart(predictive_canvas);
+	}
+
 	const ind = parseInt(ind_input.value);
 	const p = parseFloat(p_input.value);
 	const q = 1 - p;
 
 	const gene_pool = generate_pool(p, ind);
-	bar_graph.values = [gene_pool.num_recessive, gene_pool.num_heterozygous, gene_pool.num_dominant];
-	predictive_graph.values = [q * q * ind, 2 * p * q * ind, p * p * ind].map(Math.round);
+	results_chart.config.data.datasets[0].data
+		= [gene_pool.num_recessive, gene_pool.num_heterozygous, gene_pool.num_dominant];
+	predictive_chart.config.data.datasets[0].data
+		= [q * q * ind, 2 * p * q * ind, p * p * ind].map(Math.round);
+
+	results_chart.update();
+	predictive_chart.update();
 });
