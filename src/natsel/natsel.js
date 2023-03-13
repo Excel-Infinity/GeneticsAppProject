@@ -1,71 +1,118 @@
+/**
+ * @param {number} a lower bound
+ * @param {number} b upper bound
+ * @returns {number} random integer between a and b inclusive
+ */
 function random(a, b) {
     return Math.floor(Math.random() * (b - a + 1)) + a;
 }
 
 /**
- * @param {number} numIndividuals the number of individuals in the pool
- * @param {number} pFloat the percent of alleles being dominant
- * @param {number} numGenerations the number of generations to run
+ * @param {number[]} pop gen information of the form [num aa, num Aa, num AA]
+ * @param {number[]} natsel array form of survival chances (0-1) [aa chance, Aa chance, AA chance]
+ * @returns {number[]} new gen information of the form [num aa, num Aa, num AA]
+ */
+function natSel(pop, natsel) {
+    const newPopulation = [0, 0, 0];
+    for (let i = 0; i < pop[0]; i++) {
+        if (Math.random() < natsel[0]) {
+            newPopulation[0]++;
+        }
+    }
+    for (let i = 0; i < pop[1]; i++) {
+        if (Math.random() < natsel[1]) {
+            newPopulation[1]++;
+        }
+    }
+    for (let i = 0; i < pop[2]; i++) {
+        if (Math.random() < natsel[2]) {
+            newPopulation[2]++;
+        }
+    }
+    return newPopulation;
+}
+
+/**
+ * @param {number[]} population gen information of the form [num aa, num Aa, num AA]
+ * @param {number} totalIndividuals total number of individuals in the population
+ * @returns {number} allele sum; 0 for aa, 1 for Aa, 2 for AA
+ */
+function reproduceIndividual(population, totalIndividuals) {
+    let alleleSum = 0;
+    const parent1 = random(0, totalIndividuals - 1);
+    const parent2 = random(0, totalIndividuals - 1);
+    if (parent1 < population[0]) { // aa
+        alleleSum += 0;
+    } else if (parent1 < population[0] + population[1]) { // Aa
+        alleleSum += random(0, 1);
+    } else { // AA
+        alleleSum += 1;
+    }
+    if (parent2 < population[0]) { // aa
+        alleleSum += 0;
+    } else if (parent2 < population[0] + population[1]) { // Aa
+        alleleSum += random(0, 1);
+    } else { // AA
+        alleleSum += 1;
+    }
+    return alleleSum;
+}
+
+/**
+ * @param {number[]} population gen information of the form [num aa, num Aa, num AA]
+ * @param {number} totalIndividuals total number of individuals in the population
+ * @returns {number[]} new population of the form [num aa, num Aa, num AA]
+ */
+function reproduce(population, totalIndividuals) {
+    const newPopulation = [0, 0, 0];
+    for (let i = 0; i < totalIndividuals; i++) {
+        const alleleSum = reproduceIndividual(population, totalIndividuals);
+        newPopulation[alleleSum]++;
+    }
+    return newPopulation;
+}
+
+/**
+ * @param {number[]} population gen information of the form [num aa, num Aa, num AA]
+ * @param {number} totalIndividuals total number of individuals in the population
+ * @returns {number[]} normalized population of the form [num aa, num Aa, num AA]
+ */
+function normalize(population, totalIndividuals) {
+    const newPopulation = [0, 0, 0];
+    const shortTotalIndividuals = population[0] + population[1] + population[2];
+    for (let i = 0; i < population.length; i++) {
+        newPopulation[i] = Math.round(totalIndividuals * population[i] / shortTotalIndividuals);
+    }
+    return newPopulation;
+}
+
+/**
+ * @param {number[]} prevGen previous gen information of the form [num aa, num Aa, num AA]
  * @param {number[]} naturalSelection array form of survival chances (0-1) [aa chance, Aa chance, AA chance]
- *
+ * @returns {number[]} gen information of the form [num aa, num Aa, num AA]
+ */
+function gen(prevGen, naturalSelection) {
+    const totalIndividuals = prevGen[0] + prevGen[1] + prevGen[2];
+    let newGen = natSel(prevGen, naturalSelection);
+    newGen = reproduce(newGen, totalIndividuals);
+    newGen = normalize(newGen, totalIndividuals);
+    return newGen;
+}
+
+/**
+ * @param {number} numIndividuals number of individuals in the pool
+ * @param {number} pFloat fraction of alleles being dominant
+ * @param {number} numGenerations number of generations to run
+ * @param {number[]} naturalSelection array form of survival chances (0-1) [aa chance, Aa chance, AA chance]
  * @returns {number[][]} array of gen information, each element is of the form [num aa, num Aa, num AA]
  */
-function calcGens(numIndividuals, pFloat, numGenerations, naturalSelection) {
-    var ind = numIndividuals;
-    var p = pFloat;
-    var q = 1 - p;
-    var totalDomAllele = p * ind;
-    var totalRecAllele = q * ind;
-    var gens = [[0, 0, 0]];
-    var numGens = numGenerations;
-    var natSelRates = [naturalSelection[0], naturalSelection[1], naturalSelection[2]];
-    var isFirstGen = true;
-    for (var i = 1; i < numGens; i++) {
-        var tempDom = totalDomAllele;
-        var tempRec = totalRecAllele;
-        var dom = 0, hetero = 0, rec = 0;
-        for (var j = 0; j < ind; j++) {
-            var allele1 = random(0, tempDom + tempRec - 1) < tempDom ? 1 : 0;
-            tempDom -= allele1;
-            tempRec -= 1 - allele1;
-            var allele2 = random(0, tempDom + tempRec - 1) < tempDom ? 1 : 0;
-            tempDom -= allele2;
-            tempRec -= 1 - allele2;
-            var alleleSum = allele1 + allele2;
-            if (alleleSum == 0) {
-                if (Math.random() < natSelRates[0]) {
-                    rec++;
-                }
-                if (isFirstGen) {
-                    gens[0][0]++;
-                }
-            } else if (alleleSum == 1) {
-                if (Math.random() < natSelRates[1]) {
-                    hetero++;
-                }
-                if (isFirstGen) {
-                    gens[0][1]++;
-                }
-            } else if (alleleSum == 2) {
-                if (Math.random() < natSelRates[2]) {
-                    dom++;
-                }
-                if (isFirstGen) {
-                    gens[0][2]++;
-                }
-            }
-        }
-        isFirstGen = false;
-        totalDomAllele = 2 * dom + hetero;
-        totalRecAllele = 2 * rec + hetero;
-        // normalize to ind
-        totalDomAllele = Math.round(ind * totalDomAllele / (totalDomAllele + totalRecAllele));
-        totalRecAllele = ind - totalDomAllele;
-        var total = rec + hetero + dom;
-        rec = Math.round(ind * rec / total);
-        hetero = Math.round(ind * hetero / total);
-        dom = ind - rec - hetero;
-        gens[i] = [rec, hetero, dom];
+function run(numIndividuals, pFloat, numGenerations, naturalSelection) {
+    const p = pFloat;
+    const q = 1 - p;
+    const gens = [[Math.round(numIndividuals * q * q), Math.round(numIndividuals * 2 * q * p), Math.round(numIndividuals * p * p)]];
+    for (let i = 1; i < numGenerations; i++) {
+        const prevGen = gens[i - 1];
+        gens[i] = gen(prevGen, naturalSelection);
     }
     return gens;
 }
@@ -80,4 +127,4 @@ Parameters: (
 Output: Array of gens; each gen is an array of 3 integers [# ind rec, # ind hetero, # ind dom]
 */
 
-export { calcGens };
+export { run };

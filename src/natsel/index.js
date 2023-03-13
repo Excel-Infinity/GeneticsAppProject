@@ -1,4 +1,4 @@
-import { calcGens as calcGensSelection } from "./natsel.js";
+import { run as runSelection } from "./natsel.js";
 import BarGraphElem from "../bar-graph/bar-graph-elem.js"
 
 /**
@@ -55,7 +55,7 @@ run_button.addEventListener("click", () => {
 	const num_gens = parseFloat(num_gens_input.value);
 	const chances = [aa_chance, Aa_chance, AA_chance];
 
-	const gens = calcGensSelection(ind, p, num_gens, chances);
+	const gens = runSelection(ind, p, num_gens, chances);
 	const last_gen = gens[gens.length - 1];
 	start_graph.values = gens[0];
 	end_graph.values = last_gen;

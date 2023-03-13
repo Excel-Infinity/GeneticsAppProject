@@ -34,24 +34,6 @@ function reproduceInd(pop, popInd) {
 }
 
 /**
- * @param {number[]} pop [rec, hetero, dom]
- * @param {number} gFlow flow rate
- * @returns {number[]} new pop, UNFINISHED (the rest goes into the flow part)
- * @description the basic idea should actually be more accurate than the reproduction in simple and natsel, though this version uses gFlow instead of just popInd
- * @todo transfer this to the other files
- */
-function reproduceOne(pop, gFlow) {
-    var newPop = [0, 0, 0];
-    var popInd = pop[0] + pop[1] + pop[2];
-    var notFlow = Math.round(popInd * (1 - gFlow));
-    for (var i = 0; i < notFlow; i++) {
-        var alleleSum = reproduceInd(pop, popInd);
-        newPop[alleleSum]++;
-    }
-    return newPop;
-}
-
-/**
  * @param {number[]} pop1 [rec, hetero, dom]
  * @param {number[]} pop2 [rec, hetero, dom]
  * @param {number[]} originalP1 [rec, hetero, dom]
@@ -85,17 +67,17 @@ function natSel(pop) {
     // for each individual, have a chance to die
     // natsel rates are 0-1 for Math.random() usage
     for (var i = 0; i < pop[0][0]; i++) {
-        if (Math.random() > pop[1][0]) {
+        if (Math.random() < pop[1][0]) {
             newPop[0]++;
         }
     }
     for (var i = 0; i < pop[0][1]; i++) {
-        if (Math.random() > pop[1][1]) {
+        if (Math.random() < pop[1][1]) {
             newPop[1]++;
         }
     }
     for (var i = 0; i < pop[0][2]; i++) {
-        if (Math.random() > pop[1][2]) {
+        if (Math.random() < pop[1][2]) {
             newPop[2]++;
         }
     }
@@ -119,9 +101,9 @@ function normalize(pop, popInd) {
 /**
  * @param {number[]} pop [rec, hetero, dom]
  * @param {number} gFlow gene flow (float 0-1)
- * @returns {number[]} new pop
+ * @returns {number[]} new pop, unfinished (it has not done the flow yet)
  */
-function reproduce(pop, gFlow) {
+function reproducePartial(pop, gFlow) {
     var newPop = [0, 0, 0];
     var popInd = pop[0] + pop[1] + pop[2];
     var notFlow = Math.round(popInd * (1 - gFlow));
@@ -140,8 +122,8 @@ function reproduce(pop, gFlow) {
  */
 function gen(pop1, pop2, gFlow) {
     var popInd = pop1[0][0] + pop1[0][1] + pop1[0][2];
-    var newPop1 = reproduce(pop1[0], gFlow);
-    var newPop2 = reproduce(pop2[0], gFlow);
+    var newPop1 = reproducePartial(pop1[0], gFlow);
+    var newPop2 = reproducePartial(pop2[0], gFlow);
     // reproduce
     var flowPops = flow(newPop1, newPop2, pop1[0], pop2[0], popInd);
     newPop1 = flowPops[0];
