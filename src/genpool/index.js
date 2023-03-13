@@ -15,23 +15,23 @@ function allValid(...inputs) {
     return true;
 }
 
-const switcher = /** @type {HTMLElement} */ (document.querySelector('#theme-button'));
+const switcher = /** @type {HTMLElement} */ (document.querySelector("#theme-button"));
 
-switcher.addEventListener('click', function() {
-    document.body.classList.toggle('light-theme');
-    document.body.classList.toggle('dark-theme');
-    if (document.body.classList.contains('light-theme')) {
-        switcher.textContent = 'Dark Theme';
+switcher.addEventListener("click", function() {
+    document.body.classList.toggle("light-theme");
+    document.body.classList.toggle("dark-theme");
+    if (document.body.classList.contains("light-theme")) {
+        switcher.textContent = "Dark Theme";
     } else {
-        switcher.textContent = 'Light Theme';
+        switcher.textContent = "Light Theme";
     }
-    console.log('Theme switched');
+    console.log("Theme switched");
 });
 
 
-const pool_button       = /** @type {HTMLButtonElement} */ (document.getElementById('pool-button'));
-const ind_input         = /** @type {HTMLInputElement} */  (document.getElementById('ind'));
-const p_input           = /** @type {HTMLInputElement} */  (document.getElementById('p'));
+const pool_button       = /** @type {HTMLButtonElement} */ (document.getElementById("pool-button"));
+const ind_input         = /** @type {HTMLInputElement} */  (document.getElementById("ind"));
+const p_input           = /** @type {HTMLInputElement} */  (document.getElementById("p"));
 const results_canvas    = /** @type {HTMLCanvasElement} */ (document.getElementById("results-graph"));
 const predictive_canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("predictive-graph"));
 
