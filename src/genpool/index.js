@@ -1,5 +1,5 @@
 import { generate_pool } from "./gene-pool.js";
-import { create_pool_chart } from "./create-chart.js";
+import { create_pool_chart } from "../charts/bar.js";
 import { Chart } from "chart.js";
 
 /**
@@ -51,11 +51,8 @@ pool_button.addEventListener("click", () => {
 		return;
 	}
 
-	if (results_chart === null) {
+	if (results_chart === null || predictive_chart === null) {
 		results_chart = create_pool_chart(results_canvas);
-	}
-
-	if (predictive_chart === null) {
 		predictive_chart = create_pool_chart(predictive_canvas);
 	}
 

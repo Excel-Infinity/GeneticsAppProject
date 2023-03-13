@@ -1,27 +1,9 @@
-import {
-	Chart,
-	CategoryScale,
-	LinearScale,
-	BarController,
-	BarElement,
-	Colors,
-	Tooltip,
-	Title,
-	Legend
-} from "chart.js";
-
-import ChartDataLabels from "chartjs-plugin-datalabels";
+import "./common.js"
+import { Chart, BarController, BarElement } from "chart.js";
 
 Chart.register(
-	CategoryScale,
-	LinearScale,
 	BarController,
-	BarElement,
-	Colors,
-	Tooltip,
-	Title,
-	Legend,
-	ChartDataLabels
+	BarElement
 );
 
 /**

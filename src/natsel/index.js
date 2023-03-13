@@ -1,5 +1,6 @@
 import { run as runSelection } from "./natsel.js";
-import BarGraphElem from "../bar-graph/bar-graph-elem.js"
+import { Chart } from "chart.js";
+import { create_pool_chart } from "../charts/bar.js";
 
 /**
  * @param {HTMLInputElement[]} inputs
@@ -35,8 +36,14 @@ const Aa_chance_input = /** @type {HTMLInputElement} */  (document.getElementByI
 const AA_chance_input = /** @type {HTMLInputElement} */  (document.getElementById("hd-chance"));
 const num_gens_input  = /** @type {HTMLInputElement} */  (document.getElementById("num-gens"));
 
-const end_graph   = /** @type {BarGraphElem} */ (document.getElementById("end-graph"));
-const start_graph = /** @type {BarGraphElem} */ (document.getElementById("start-graph"));
+const start_canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("start-graph"));
+const end_canvas   = /** @type {HTMLCanvasElement} */ (document.getElementById("end-graph"));
+
+/** @type {Chart | null} */
+var start_chart = null;
+
+/** @type {Chart | null} */
+var end_chart = null;
 
 // Note: the other inputs should be added back here
 
@@ -45,6 +52,11 @@ run_button.addEventListener("click", () => {
 		// Temp. error-checking
 		alert(":( Invalid inputs");
 		return;
+	}
+
+	if (start_chart === null || end_chart === null) {
+		start_chart = create_pool_chart(start_canvas);
+		end_chart = create_pool_chart(end_canvas);
 	}
 
 	const ind = parseInt(ind_input.value);
@@ -57,6 +69,9 @@ run_button.addEventListener("click", () => {
 
 	const gens = runSelection(ind, p, num_gens, chances);
 	const last_gen = gens[gens.length - 1];
-	start_graph.values = gens[0];
-	end_graph.values = last_gen;
+	start_chart.config.data.datasets[0].data = gens[0];
+	end_chart.config.data.datasets[0].data = last_gen;
+
+	start_chart.update();
+	end_chart.update();
 });

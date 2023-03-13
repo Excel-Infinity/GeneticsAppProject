@@ -18,6 +18,11 @@ ul {
     font-family: serif;
 }
 
+.bar-chart-holder {
+	background-color: var(--white);
+	width: 500px;
+}
+
 .thing {
     font-family: monospace;
 }
