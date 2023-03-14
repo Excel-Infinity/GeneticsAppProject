@@ -51,6 +51,11 @@ ul {
     width: 50px;
 }
 
+#pool-button {
+    background: var(--btnBg);
+    color: var(--btnFontColor);
+}
+
 #submit-button {
     background: var(--btnBg);
     color: var(--btnFontColor);

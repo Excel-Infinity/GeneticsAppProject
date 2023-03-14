@@ -9,11 +9,10 @@
     </head>
     <body class="dark-theme">
         <h1>Genetic Drift</h1>
+		Predicted:<br>
+		<div class="bar-chart-holder"><canvas id="predictive-graph"></canvas></div><br>
         Simulated:<br>
-		<div class="bar-chart-holder"><canvas id="results-graph"></canvas></div>
-		<br>Predicted:<br>
-		<div class="bar-chart-holder"><canvas id="predictive-graph"></canvas></div>
-        <br>
+		<div class="bar-chart-holder"><canvas id="results-graph"></canvas></div><br>
         <!-- make a form for inputs for # gens, starting p, # ind, and natsel -->
         <form class="inputs">
             <label for="ind">Individuals (1 to 1 million)</label>
@@ -22,7 +21,7 @@
             <input type="number" id="p" name="p" min="0" max="1" step="any"><br>
             <label for="gens">Generations (1 to 1000)</label>
             <input type="number" id="gens" name="gens" min="1" max="1000"><br>
-            <label for="seed">Seed for PRNG (optional, can be any number up to about 300 digits)</label>
+            <label for="seed">Seed for PRNG/pseudo-random number generator (optional, any number up to ~300 digits)</label>
             <input type="number" id="seed" name="seed"><br>
 			<button id="pool-button" type="button">Generate Pool</button>
         </form>
