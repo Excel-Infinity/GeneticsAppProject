@@ -6,7 +6,7 @@ module.exports = {
 	entry: {
 		genpool: path.resolve(__dirname, "src", "genpool", "index.js"),
 		natsel: path.resolve(__dirname, "src", "natsel", "index.js"),
-		bargraphelem: path.resolve(__dirname, "src", "bar-graph", "bar-graph-elem.js")
+		geneflow: path.resolve(__dirname, "src", "geneflow", "index.js")
 	},
 	output: {
 		path: path.resolve(__dirname, "website"),
