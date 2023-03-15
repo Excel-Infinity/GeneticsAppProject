@@ -20,13 +20,11 @@ function mulberry32(a) {
  * @returns {number[]} new gen information of the form [num aa, num Aa, num AA]
  */
 function flow(population, flowRate, otherPop, rand) {
-    const gen = [population[0], population[1], population[2]];
-    if (flowRate < 0) {
-        flowIn(population, flowRate, otherPop, rand);
+    if (flowRate > 0) {
+        return flowIn(population, flowRate, otherPop, rand);
     } else {
-        flowOut(population, flowRate, rand);
+        return flowOut(population, flowRate, rand);
     }
-    return gen;
 }
 
 /**
@@ -90,13 +88,13 @@ function normalize(population, totalIndividuals) {
 
 /**
  * @param {number[]} prevGen previous gen information of the form [num aa, num Aa, num AA]
+ * @param {number} totalIndividuals total number of individuals to normalize to
  * @param {number} flowRate rate at which individuals flow in or out; positive means in and negative means out (net individual count)
  * @param {number[]} otherPop gen information of the form [num aa, num Aa, num AA]
  * @param {() => number} rand random number generator
  * @returns {number[]} gen information of the form [num aa, num Aa, num AA]
  */
-function gen(prevGen, flowRate, otherPop = prevGen, rand) {
-    const totalIndividuals = prevGen[0] + prevGen[1] + prevGen[2];
+function gen(prevGen, totalIndividuals, flowRate, otherPop = prevGen, rand) {
     let newGen = flow(prevGen, flowRate, otherPop, rand);
     newGen = normalize(newGen, totalIndividuals);
     return newGen;
@@ -118,7 +116,7 @@ function run(numIndividuals, pFloat, numGenerations, flowRate, otherPop, seed) {
     const rand = mulberry32(seed);
     for (let i = 1; i < numGenerations; i++) {
         const prevGen = gens[i - 1];
-        gens[i] = gen(prevGen, flowRate, otherPop, rand);
+        gens[i] = gen(prevGen, numIndividuals, flowRate, otherPop, rand);
     }
     return gens;
 }

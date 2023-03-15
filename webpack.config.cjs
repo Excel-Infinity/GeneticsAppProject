@@ -2,7 +2,7 @@ const path = require("path");
 const LicensePlugin = require("webpack-license-plugin");
 
 module.exports = {
-	mode: "production",
+	mode: "development",
 	entry: {
 		genpool: path.resolve(__dirname, "src", "genpool", "index.js"),
 		natsel: path.resolve(__dirname, "src", "natsel", "index.js"),

@@ -8,7 +8,7 @@
 		<link rel="stylesheet" href="main.css">
 	</head>
 	<body class="dark-theme">
-		<h1>Natural Selection</h1>
+		<h1>Gene Flow</h1>
 		
 		<p>Starting Numbers:</p>
 		<div class="bar-chart-holder"><canvas id="start-graph"></canvas></div>
@@ -21,19 +21,21 @@
 			<input type="number" id="ind" name="ind" min="1" max="1000000"><br>
 			<label for="p">Starting p (0 to 1)</label>
 			<input type="number" id="p" name="p" min="0" max="1" step="any"><br>
-			<label for="hr-chance">aa survive chance (0 to 1)</label>
-			<input type="number" id="hr-chance" name="aa-chance" min="0" max="1" step="any"><br>
-			<label for="he-chance">Aa survive chance (0 to 1)</label>
-			<input type="number" id="he-chance" name="Aa-chance" min="0" max="1" step="any"><br>
-			<label for="hd-chance">AA survive chance (0 to 1)</label>
-			<input type="number" id="hd-chance" name="AA-chance" min="0" max="1" step="any"><br>
+			<label for="flow-rate">Flow rate (negative is out, positive is in)</label>
+			<input type="number" id="flow-rate" name="flow-rate"><br>
+			<label for="gen-aa">number of aa individuals in other population</label>
+			<input type="number" id="gen-aa" name="gen-aa" min="0"><br>
+			<label for="gen-Aa">number of Aa individuals in other population</label>
+			<input type="number" id="gen-Aa" name="gen-Aa" min="0"><br>
+			<label for="gen-AA">number of AA individuals in other population</label>
+			<input type="number" id="gen-AA" name="gen-AA" min="0"><br>
 			<label for="num-gens">Number of Generations</label>
 			<input type="number" id="num-gens" name="num-gens" min="1" step="1"><br>
 			<label for="seed">Seed for PRNG (optional, can be any number up to about 300 digits)</label>
 			<input type="number" id="seed" name="seed"><br>
 			<button id="run-button" type="button">Run</button>
 		</form>
-		<script src="natsel.js"></script>
+		<script src="geneflow.js"></script>
 		<noscript>why don't you have js..</noscript>
 	</body>
 </html>
