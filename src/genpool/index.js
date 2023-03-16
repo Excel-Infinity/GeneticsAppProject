@@ -1,33 +1,7 @@
 import { run } from "./geneticdrift.js";
 import { create_pool_chart } from "../charts/bar.js";
 import { Chart } from "chart.js";
-
-/**
- * @param {HTMLInputElement[]} inputs
- */
-function allValid(...inputs) {
-    for (const input of inputs) {
-        if (parseFloat(input.value) < parseFloat(input.min) || parseFloat(input.value) > parseFloat(input.max)) {
-            return false;
-        }
-    }
-
-    return true;
-}
-
-const switcher = /** @type {HTMLElement} */ (document.getElementById("theme-button"));
-
-switcher.addEventListener("click", function() {
-    document.body.classList.toggle("light-theme");
-    document.body.classList.toggle("dark-theme");
-    if (document.body.classList.contains("light-theme")) {
-        switcher.textContent = "Dark Theme";
-    } else {
-        switcher.textContent = "Light Theme";
-    }
-    console.log("Theme switched");
-});
-
+import { validate_number_inputs } from "../common.js";
 
 const pool_button       = /** @type {HTMLButtonElement} */ (document.getElementById("pool-button"));
 const ind_input         = /** @type {HTMLInputElement} */  (document.getElementById("ind"));
@@ -47,8 +21,8 @@ results_canvas.height = 0;
 predictive_canvas.height = 0;
 
 pool_button.addEventListener("click", () => {
-	if (!allValid(ind_input, p_input)) {
-		// Temp. error-checking
+	if (!validate_number_inputs(ind_input, p_input, gens_input)) {
+		// Temp. error-checking, but better this time
 		alert(":( Invalid inputs");
 		return;
 	}

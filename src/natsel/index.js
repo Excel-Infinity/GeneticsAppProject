@@ -1,18 +1,7 @@
 import { run as runSelection } from "./natsel.js";
 import { Chart } from "chart.js";
 import { create_pool_chart } from "../charts/bar.js";
-
-/**
- * @param {HTMLInputElement[]} inputs
- */
-function allValid(...inputs) {
-    for (var i = 0; i < inputs.length; i++) {
-        if (parseFloat(inputs[i].value) < parseFloat(inputs[i].min) || parseFloat(inputs[i].value) > parseFloat(inputs[i].max)) {
-            return false;
-        }
-    }
-    return true;
-}
+import { validate_number_inputs } from "../common.js";
 
 const switcher = /** @type {HTMLElement} */ (document.getElementById("theme-button"));
 
@@ -46,11 +35,16 @@ var start_chart = null;
 /** @type {Chart | null} */
 var end_chart = null;
 
-// Note: the other inputs should be added back here
-
 run_button.addEventListener("click", () => {
-	if (!allValid(ind_input, p_input, aa_chance_input, Aa_chance_input, AA_chance_input)) {
-		// Temp. error-checking
+	if (!validate_number_inputs(
+		ind_input,
+		p_input,
+		aa_chance_input,
+		Aa_chance_input,
+		AA_chance_input,
+		num_gens_input
+	)) {
+		// Temp. error-checking, but better
 		alert(":( Invalid inputs");
 		return;
 	}

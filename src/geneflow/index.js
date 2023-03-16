@@ -1,40 +1,15 @@
 import { run as runSelection } from "./geneflow.js";
 import { Chart } from "chart.js";
 import { create_pool_chart } from "../charts/bar.js";
-
-/**
- * @param {HTMLInputElement[]} inputs
- */
-function allValid(...inputs) {
-    for (var i = 0; i < inputs.length; i++) {
-        if (parseFloat(inputs[i].value) < parseFloat(inputs[i].min) || parseFloat(inputs[i].value) > parseFloat(inputs[i].max)) {
-            return false;
-        }
-    }
-    return true;
-}
-
-const switcher = /** @type {HTMLElement} */ (document.getElementById("theme-button"));
-
-switcher.addEventListener("click", function() {
-    document.body.classList.toggle("light-theme");
-    document.body.classList.toggle("dark-theme");
-    if (document.body.classList.contains("light-theme")) {
-        switcher.textContent = "Dark Theme";
-    } else {
-        switcher.textContent = "Light Theme";
-    }
-    console.log("Theme switched");
-});
-
+import { validate_number_inputs } from "../common.js";
 
 const run_button      = /** @type {HTMLButtonElement} */ (document.getElementById("run-button"));
 const ind_input       = /** @type {HTMLInputElement} */  (document.getElementById("ind"));
 const p_input         = /** @type {HTMLInputElement} */  (document.getElementById("p"));
-const aa_input = /** @type {HTMLInputElement} */  (document.getElementById("gen-aa"));
-const Aa_input = /** @type {HTMLInputElement} */  (document.getElementById("gen-Aa"));
-const AA_input = /** @type {HTMLInputElement} */  (document.getElementById("gen-AA"));
-const flow_input = /** @type {HTMLInputElement} */  (document.getElementById("flow-rate"));
+const aa_input        = /** @type {HTMLInputElement} */  (document.getElementById("gen-aa"));
+const Aa_input        = /** @type {HTMLInputElement} */  (document.getElementById("gen-Aa"));
+const AA_input        = /** @type {HTMLInputElement} */  (document.getElementById("gen-AA"));
+const flow_input      = /** @type {HTMLInputElement} */  (document.getElementById("flow-rate"));
 const num_gens_input  = /** @type {HTMLInputElement} */  (document.getElementById("num-gens"));
 const seed_input      = /** @type {HTMLInputElement} */  (document.getElementById("seed"));
 
@@ -47,10 +22,20 @@ var start_chart = null;
 /** @type {Chart | null} */
 var end_chart = null;
 
+
+
 // Note: the other inputs should be added back here
 
 run_button.addEventListener("click", () => {
-	if (!allValid(ind_input, p_input, aa_input, Aa_input, AA_input, flow_input)) {
+	if (!validate_number_inputs(
+		ind_input,
+		p_input,
+		aa_input,
+		Aa_input,
+		AA_input,
+		flow_input,
+		num_gens_input
+	)) {
 		// Temp. error-checking
 		alert(":( Invalid inputs");
 		return;
