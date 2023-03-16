@@ -1,8 +1,7 @@
 /**
  * @param {number} a seed for random number generator
- * @returns {() => number} random number between 0 and 1
+ * @returns {() => number} function to create a random number between 0 and 1
  * @description https://github.com/bryc/code/blob/master/jshash/PRNGs.md
- * I needed a seedable random number generator
  */
 function mulberry32(a) {
     return function() {
@@ -131,15 +130,5 @@ function run(numIndividuals, pFloat, numGenerations, naturalSelection, seed) {
     }
     return gens;
 }
-
-/*
-Parameters: (
-    individuals (integer),
-    p (float 0-1), <- maps to dominant allele
-    generations (integer),
-    natsel rates (3 floats 0-1)
-)
-Output: Array of gens; each gen is an array of 3 integers [# ind rec, # ind hetero, # ind dom]
-*/
 
 export { run };
