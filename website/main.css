@@ -23,10 +23,6 @@ ul {
 	width: 500px;
 }
 
-.thing {
-    font-family: monospace;
-}
-
 .light-theme {
     --bg: var(--gray);
     --fontColor: var(--black);
