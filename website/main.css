@@ -63,3 +63,7 @@ ul {
     height: 25px;
     width: 60px;
 }
+
+input.checked-invalid:invalid {
+	background-color: lightpink;
+}

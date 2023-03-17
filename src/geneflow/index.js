@@ -1,16 +1,20 @@
 import { run as runSelection } from "./geneflow.js";
 import { Chart } from "chart.js";
 import { create_pool_chart } from "../charts/bar.js";
+import { setup_inputs } from "../common.js";
 
-const form            = /** @type {HTMLFormElement} */   (document.getElementById("inputs"));
-const ind_input       = /** @type {HTMLInputElement} */  (document.getElementById("ind"));
-const p_input         = /** @type {HTMLInputElement} */  (document.getElementById("p"));
-const aa_input        = /** @type {HTMLInputElement} */  (document.getElementById("gen-aa"));
-const Aa_input        = /** @type {HTMLInputElement} */  (document.getElementById("gen-Aa"));
-const AA_input        = /** @type {HTMLInputElement} */  (document.getElementById("gen-AA"));
-const flow_input      = /** @type {HTMLInputElement} */  (document.getElementById("flow-rate"));
-const num_gens_input  = /** @type {HTMLInputElement} */  (document.getElementById("num-gens"));
-const seed_input      = /** @type {HTMLInputElement} */  (document.getElementById("seed"));
+const form = document.forms[0];
+
+const [
+	ind_input,
+	p_input,
+	aa_input,
+	Aa_input,
+	AA_input,
+	flow_input,
+	num_gens_input,
+	seed_input
+] = setup_inputs(form);
 
 const start_canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("start-graph"));
 const end_canvas   = /** @type {HTMLCanvasElement} */ (document.getElementById("end-graph"));

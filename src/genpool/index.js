@@ -1,12 +1,16 @@
 import { run } from "./geneticdrift.js";
 import { create_pool_chart } from "../charts/bar.js";
 import { Chart } from "chart.js";
+import { setup_inputs } from "../common.js";
 
-const form              = /** @type {HTMLFormElement} */   (document.getElementById("inputs"));
-const ind_input         = /** @type {HTMLInputElement} */  (document.getElementById("ind"));
-const p_input           = /** @type {HTMLInputElement} */  (document.getElementById("p"));
-const gens_input        = /** @type {HTMLInputElement} */  (document.getElementById("gens"));
-const seed_input        = /** @type {HTMLInputElement} */  (document.getElementById("seed"));
+const form = document.forms[0];
+const [
+	ind_input,
+	p_input,
+	gens_input,
+	seed_input
+] = setup_inputs(form);
+
 const results_canvas    = /** @type {HTMLCanvasElement} */ (document.getElementById("results-graph"));
 const predictive_canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("predictive-graph"));
 

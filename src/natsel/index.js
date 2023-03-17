@@ -1,29 +1,18 @@
 import { run as runSelection } from "./natsel.js";
 import { Chart } from "chart.js";
 import { create_pool_chart } from "../charts/bar.js";
+import { setup_inputs } from "../common.js";
 
-const switcher = /** @type {HTMLElement} */ (document.getElementById("theme-button"));
-
-switcher.addEventListener("click", function() {
-    document.body.classList.toggle("light-theme");
-    document.body.classList.toggle("dark-theme");
-    if (document.body.classList.contains("light-theme")) {
-        switcher.textContent = "Dark Theme";
-    } else {
-        switcher.textContent = "Light Theme";
-    }
-    console.log("Theme switched");
-});
-
-
-const form            = /** @type {HTMLFormElement} */   (document.getElementById("inputs"));
-const ind_input       = /** @type {HTMLInputElement} */  (document.getElementById("ind"));
-const p_input         = /** @type {HTMLInputElement} */  (document.getElementById("p"));
-const aa_chance_input = /** @type {HTMLInputElement} */  (document.getElementById("hr-chance"));
-const Aa_chance_input = /** @type {HTMLInputElement} */  (document.getElementById("he-chance"));
-const AA_chance_input = /** @type {HTMLInputElement} */  (document.getElementById("hd-chance"));
-const num_gens_input  = /** @type {HTMLInputElement} */  (document.getElementById("num-gens"));
-const seed_input      = /** @type {HTMLInputElement} */  (document.getElementById("seed"));
+const form = document.forms[0];
+const [
+	ind_input,
+	p_input,
+	aa_chance_input,
+	Aa_chance_input,
+	AA_chance_input,
+	num_gens_input,
+	seed_input
+] = setup_inputs(form);
 
 const start_canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("start-graph"));
 const end_canvas   = /** @type {HTMLCanvasElement} */ (document.getElementById("end-graph"));
