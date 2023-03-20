@@ -1,7 +1,7 @@
 import { run } from "./geneticdrift.js";
 import { create_pool_chart } from "../charts/bar.js";
 import { Chart } from "chart.js";
-import { setup_inputs } from "../common.js";
+import { get_rand, setup_inputs } from "../common.js";
 
 const form = document.forms[0];
 const [
@@ -35,9 +35,9 @@ form.addEventListener("submit", event => {
 	const p = parseFloat(p_input.value);
 	const q = 1 - p;
 	const gens = parseFloat(gens_input.value);
-	const seed = parseFloat(seed_input.value);
+	const rand = get_rand(seed_input);
 
-	const gene_pool = run(ind, p, gens, seed);
+	const gene_pool = run(ind, p, gens, rand);
 	results_chart.config.data.datasets[0].data
 		= [gene_pool[gene_pool.length - 1][0], gene_pool[gene_pool.length - 1][1], gene_pool[gene_pool.length - 1][2]];
 	predictive_chart.config.data.datasets[0].data

@@ -1,7 +1,7 @@
 import { run as runSelection } from "./natsel.js";
 import { Chart } from "chart.js";
 import { create_pool_chart } from "../charts/bar.js";
-import { setup_inputs } from "../common.js";
+import { get_rand, setup_inputs } from "../common.js";
 
 const form = document.forms[0];
 const [
@@ -38,9 +38,9 @@ form.addEventListener("submit", event => {
 	const AA_chance = parseFloat(AA_chance_input.value);
 	const num_gens = parseFloat(num_gens_input.value);
 	const chances = [aa_chance, Aa_chance, AA_chance];
-	const seed = parseFloat(seed_input.value);
+	const rand = get_rand(seed_input);
 
-	const gens = runSelection(ind, p, num_gens, chances, seed);
+	const gens = runSelection(ind, p, num_gens, chances, rand);
 	const last_gen = gens[gens.length - 1];
 	start_chart.config.data.datasets[0].data = gens[0];
 	end_chart.config.data.datasets[0].data = last_gen;

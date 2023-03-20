@@ -1,7 +1,7 @@
 import { run as runSelection } from "./geneflow.js";
 import { Chart } from "chart.js";
 import { create_pool_chart } from "../charts/bar.js";
-import { setup_inputs } from "../common.js";
+import { get_rand, setup_inputs } from "../common.js";
 
 const form = document.forms[0];
 
@@ -40,10 +40,10 @@ form.addEventListener("submit", event => {
 	const AA_amount = parseFloat(AA_input.value);
 	const num_gens = parseFloat(num_gens_input.value);
     const flow_rate = parseFloat(flow_input.value);
-	const seed = parseFloat(seed_input.value);
+	const rand = get_rand(seed_input);
 	const frequency = [aa_amount, Aa_amount, AA_amount];
 
-	const gens = runSelection(ind, p, num_gens, flow_rate, frequency, seed);
+	const gens = runSelection(ind, p, num_gens, flow_rate, frequency, rand);
 	const last_gen = gens[gens.length - 1];
 	start_chart.config.data.datasets[0].data = gens[0];
 	end_chart.config.data.datasets[0].data = last_gen;

@@ -11,21 +11,6 @@ function random(a, b, random) {
 }
 
 /**
- * @param {number} a seed for random number generator
- * @returns {() => number} random number between 0 and 1
- * @description https://github.com/bryc/code/blob/master/jshash/PRNGs.md
- * I needed a seedable random number generator
- */
-function mulberry32(a) {
-    return function() {
-      a |= 0; a = a + 0x6D2B79F5 | 0;
-      var t = Math.imul(a ^ a >>> 15, 1 | a);
-      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
-      return ((t ^ t >>> 14) >>> 0) / 4294967296;
-    }
-}
-
-/**
  * 
  * @param {number} aa number of individuals with genotype aa
  * @param {number} Aa number of individuals with genotype Aa
@@ -64,11 +49,10 @@ function reproduce(aa, Aa, AA, rand) {
  * @param {number} numIndividuals number of individuals in the population
  * @param {number} pFloat probability of an individual having the dominant allele
  * @param {number} numGenerations number of generations to simulate
- * @param {number} seed seed for random number generator
+ * @param {() => number} rand random number generator
  * @returns {number[][]} array of gen information of the form [num aa, num Aa, num AA]
  */
-function run(numIndividuals, pFloat, numGenerations, seed = 0) {
-    const rand = mulberry32(seed);
+function run(numIndividuals, pFloat, numGenerations, rand) {
     const p = pFloat;
     const q = 1 - p;
     const genData = [[numIndividuals * q * q, numIndividuals * 2 * p * q, numIndividuals * p * p]]; // hardy-weinberg

@@ -1,18 +1,4 @@
 /**
- * @param {number} a seed for random number generator
- * @returns {() => number} function to create a random number between 0 and 1
- * @description https://github.com/bryc/code/blob/master/jshash/PRNGs.md
- */
-function mulberry32(a) {
-    return function() {
-      a |= 0; a = a + 0x6D2B79F5 | 0;
-      var t = Math.imul(a ^ a >>> 15, 1 | a);
-      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
-      return ((t ^ t >>> 14) >>> 0) / 4294967296;
-    }
-}
-
-/**
  * @param {number} a lower bound
  * @param {number} b upper bound
  * @param {() => number} rand random number generator
@@ -116,14 +102,13 @@ function gen(prevGen, naturalSelection, rand) {
  * @param {number} pFloat fraction of alleles being dominant
  * @param {number} numGenerations number of generations to run
  * @param {number[]} naturalSelection array form of survival chances (0-1) [aa chance, Aa chance, AA chance]
- * @param {number} seed seed for random number generator
+ * @param {() => number} rand random number generator
  * @returns {number[][]} array of gen information, each element is of the form [num aa, num Aa, num AA]
  */
-function run(numIndividuals, pFloat, numGenerations, naturalSelection, seed) {
+function run(numIndividuals, pFloat, numGenerations, naturalSelection, rand) {
     const p = pFloat;
     const q = 1 - p;
     const gens = [[Math.round(numIndividuals * q * q), Math.round(numIndividuals * 2 * q * p), Math.round(numIndividuals * p * p)]];
-    const rand = mulberry32(seed);
     for (let i = 1; i < numGenerations; i++) {
         const prevGen = gens[i - 1];
         gens[i] = gen(prevGen, naturalSelection, rand);
