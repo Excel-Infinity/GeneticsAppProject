@@ -15,10 +15,10 @@ const results_canvas    = /** @type {HTMLCanvasElement} */ (document.getElementB
 const predictive_canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("predictive-graph"));
 
 /** @type {Chart | null} */
-var results_chart = null;
+let results_chart = null;
 
 /** @type {Chart | null} */
-var predictive_chart = null;
+let predictive_chart = null;
 
 results_canvas.height = 0;
 predictive_canvas.height = 0;
