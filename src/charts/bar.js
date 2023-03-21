@@ -1,5 +1,6 @@
 import "./common.js"
 import { Chart, BarController, BarElement } from "chart.js";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
 Chart.register(
 	BarController,
@@ -17,6 +18,7 @@ function create_pool_chart(canvas) {
 		canvas,
 		{
 			type: "bar",
+			plugins: [/** @type {*} */ (ChartDataLabels)],
 			data: {
 				labels: ["aa", "Aa", "AA"],
 				datasets: [{

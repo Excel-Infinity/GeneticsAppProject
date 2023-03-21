@@ -8,14 +8,11 @@ import {
 	Legend
 } from "chart.js";
 
-import ChartDataLabels from "chartjs-plugin-datalabels";
-
 Chart.register(
 	CategoryScale,
 	LinearScale,
 	Colors,
 	Tooltip,
 	Title,
-	Legend,
-	ChartDataLabels
+	Legend
 );
