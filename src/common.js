@@ -1,3 +1,5 @@
+import { Chart } from "chart.js";
+
 const invalid_class = "checked-invalid";
 
 /**
@@ -45,4 +47,22 @@ function get_rand(seed_input) {
 	return mulberry32(parseInt(value));
 }
 
-export { setup_inputs, get_rand };
+/**
+ * @param {number[][]} gens the data, in the format of [[aa, Aa, AA], ...]
+ * @param {Chart} chart the chart to update
+ */
+function update_progress_chart(gens, chart) {
+	const datasets = chart.data.datasets;
+	for (let i = 0; i < datasets.length; ++i) {
+		datasets[i].data = gens.map(arr => Math.round(arr[i]));
+	}
+
+	const labels = chart.data.labels;
+	if (labels === undefined || labels.length !== gens.length) {
+		chart.data.labels = gens.map((_, index) => index); 
+	}
+
+	chart.update();
+}
+
+export { setup_inputs, get_rand, update_progress_chart };

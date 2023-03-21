@@ -1,7 +1,8 @@
 import { run as runSelection } from "./natsel.js";
 import { Chart } from "chart.js";
 import { create_pool_chart } from "../charts/bar.js";
-import { get_rand, setup_inputs } from "../common.js";
+import { get_rand, setup_inputs, update_progress_chart } from "../common.js";
+import { create_progress_chart } from "../charts/line.js";
 
 const form = document.forms[0];
 const [
@@ -14,21 +15,24 @@ const [
 	seed_input
 ] = setup_inputs(form);
 
-const start_canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("start-graph"));
-const end_canvas   = /** @type {HTMLCanvasElement} */ (document.getElementById("end-graph"));
+const start_canvas   = /** @type {HTMLCanvasElement} */ (document.getElementById("start-graph"));
+const progress_canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("progress-graph"));
 
 /** @type {Chart | null} */
 var start_chart = null;
 
 /** @type {Chart | null} */
-var end_chart = null;
+var progress_chart = null;
+
+start_canvas.height = 0;
+progress_canvas.height = 0;
 
 form.addEventListener("submit", event => {
 	event.preventDefault();
 
-	if (start_chart === null || end_chart === null) {
+	if (start_chart === null || progress_chart === null) {
 		start_chart = create_pool_chart(start_canvas);
-		end_chart = create_pool_chart(end_canvas);
+		progress_chart = create_progress_chart(progress_canvas);
 	}
 
 	const ind = parseFloat(ind_input.value);
@@ -41,10 +45,8 @@ form.addEventListener("submit", event => {
 	const rand = get_rand(seed_input);
 
 	const gens = runSelection(ind, p, num_gens, chances, rand);
-	const last_gen = gens[gens.length - 1];
-	start_chart.config.data.datasets[0].data = gens[0];
-	end_chart.config.data.datasets[0].data = last_gen;
 
+	update_progress_chart(gens, progress_chart);
+	start_chart.config.data.datasets[0].data = gens[0];
 	start_chart.update();
-	end_chart.update();
 });

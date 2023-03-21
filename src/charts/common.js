@@ -17,5 +17,5 @@ Chart.register(
 	Tooltip,
 	Title,
 	Legend,
-		ChartDataLabels
+	ChartDataLabels
 );
