@@ -59,33 +59,15 @@ function flowIn(population, flowRate, otherPop, rand) {
 }
 
 /**
- * @param {number} p fraction of alleles being dominant
- * @param {number} q fraction of alleles being recessive
- * @returns {number} index of the genotype to add to the new population
- */
-function genInd(p, q) {
-    const randNum = Math.random();
-    if (randNum < q * q) {
-        return 0;
-    } else if (randNum < q * q + 2 * q * p) {
-        return 1;
-    } else {
-        return 2;
-    }
-}
-
-/**
  * @param {number[]} population gen information of the form [num aa, num Aa, num AA]
  * @param {number} totalIndividuals total number of individuals in the population
  * @returns {number[]} normalized population of the form [num aa, num Aa, num AA]
  */
-function reproduce(population, totalIndividuals) {
+function normalize(population, totalIndividuals) {
     const newPopulation = [0, 0, 0];
-    const shortTotal = population[0] + population[1] + population[2];
-    const p = ((population[1] / 2) + population[2]) / shortTotal;
-    const q = 1 - p;
-    for (let i = 0; i < totalIndividuals; i++) {
-        newPopulation[genInd(p, q)]++;
+    const shortTotalIndividuals = population[0] + population[1] + population[2];
+    for (let i = 0; i < population.length; i++) {
+        newPopulation[i] = Math.round(totalIndividuals * population[i] / shortTotalIndividuals);
     }
     return newPopulation;
 }
@@ -100,7 +82,7 @@ function reproduce(population, totalIndividuals) {
  */
 function gen(prevGen, totalIndividuals, flowRate, otherPop = prevGen, rand) {
     let newGen = flow(prevGen, flowRate, otherPop, rand);
-    newGen = reproduce(newGen, totalIndividuals);
+    newGen = normalize(newGen, totalIndividuals);
     return newGen;
 }
 
