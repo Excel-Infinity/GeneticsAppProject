@@ -49,6 +49,7 @@ form.addEventListener("submit", event => {
 	const frequency = [aa_amount, Aa_amount, AA_amount];
 	let gens;
 	if (flow_rate > 0) {
+		console.log("sfhisdhiosdhiosdfhoisdfh");
 		gens = runSelection(ind, p, num_gens, flow_rate, frequency, rand);
 	} else {
 		gens = runDrift(ind, p, num_gens, rand);
