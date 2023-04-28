@@ -52,6 +52,7 @@ form.addEventListener("submit", event => {
 		gens = runSelection(ind, p, num_gens, flow_rate, frequency, rand);
 	} else {
 		gens = runDrift(ind, p, num_gens, rand);
+		console.log("ufqecguicbadssknvbv");
 	}
 
 	update_progress_chart(gens, progress_chart);
