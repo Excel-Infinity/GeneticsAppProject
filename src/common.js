@@ -42,7 +42,7 @@ function mulberry32(a) {
  */
 function get_rand(seed_input) {
 	const value = seed_input.value;
-	if (value.length === 0) return () => 0.5;
+	if (value.length === 0) return Math.random;
 
 	return mulberry32(parseInt(value));
 }
