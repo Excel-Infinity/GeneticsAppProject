@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AsherCopeland/GeneticsAppProject.git"
+    "url": "git+https://github.com/ExcelInfinity/GeneticsAppProject.git"
   },
   "keywords": [],
   "author": "me and someone else",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/AsherCopeland/GeneticsAppProject/issues"
+    "url": "https://github.com/ExcelInfinity/GeneticsAppProject/issues"
   },
-  "homepage": "https://github.com/AsherCopeland/GeneticsAppProject#readme",
+  "homepage": "https://github.com/ExcelInfinity/GeneticsAppProject#readme",
   "devDependencies": {
     "path": "^0.12.7",
     "webpack": "^5.76.0",
