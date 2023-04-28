@@ -1,4 +1,5 @@
 import { run as runSelection } from "./geneflow.js";
+import { run as runDrift } from "../genpool/geneticdrift.js";
 import { Chart } from "chart.js";
 import { create_pool_chart } from "../charts/bar.js";
 import { get_rand, setup_inputs, update_progress_chart } from "../common.js";
@@ -46,8 +47,12 @@ form.addEventListener("submit", event => {
     const flow_rate = parseFloat(flow_input.value);
 	const rand = get_rand(seed_input);
 	const frequency = [aa_amount, Aa_amount, AA_amount];
-
-	const gens = runSelection(ind, p, num_gens, flow_rate, frequency, rand);
+	let gens;
+	if (flow_rate > 0) {
+		gens = runSelection(ind, p, num_gens, flow_rate, frequency, rand);
+	} else {
+		gens = runDrift(ind, p, num_gens, rand);
+	}
 
 	update_progress_chart(gens, progress_chart);
 	start_chart.config.data.datasets[0].data = gens[0];
