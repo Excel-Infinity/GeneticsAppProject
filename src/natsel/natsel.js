@@ -1,14 +1,4 @@
 /**
- * @param {number} a lower bound
- * @param {number} b upper bound
- * @param {() => number} rand random number generator
- * @returns {number} random integer between a and b inclusive
- */
-function random(a, b, rand) {
-    return Math.floor(rand() * (b - a + 1)) + a;
-}
-
-/**
  * @param {number[]} pop gen information of the form [num aa, num Aa, num AA]
  * @param {number[]} natsel array form of survival chances (0-1) [aa chance, Aa chance, AA chance]
  * @param {() => number} rand random number generator
@@ -32,41 +22,6 @@ function natSel(pop, natsel, rand) {
         }
     }
     return newPopulation;
-}
-
-/**
- * @param {number[]} population gen information of the form [num aa, num Aa, num AA]
- * @param {number} totalIndividuals total number of individuals in the population
- * @param {() => number} rand random number generator
- * @returns {number[]} new gen information of the form [num aa, num Aa, num AA]
- */
-function reproduce(population, totalIndividuals, rand) {
-    const aa = population[0];
-    const Aa = population[1];
-    const AA = population[2];
-    const totalRecessive = 2 * aa + Aa;
-    const totalDominant = 2 * AA + Aa;
-    // hardy weinberg
-    const p = totalDominant / (2 * totalIndividuals);
-    const q = 1 - p;
-    const p2 = p * p;
-    const q2 = q * q;
-    const pq = 2 * p * q;
-    const p2Ind = Math.round(totalIndividuals * p2);
-    const q2Ind = Math.round(totalIndividuals * q2);
-    const pqInd = Math.round(totalIndividuals * pq);
-    const gen = [0, 0, 0];
-    for (let i = 0; i < totalIndividuals; i++) {
-        const individual = random(0, totalIndividuals - 1, rand);
-        if (individual < p2Ind) {
-            gen[2]++;
-        } else if (individual < p2Ind + pqInd) {
-            gen[1]++;
-        } else {
-            gen[0]++;
-        }
-    }
-    return gen;
 }
 
 /**
