@@ -5,17 +5,18 @@ import { get_rand, setup_inputs, update_progress_chart } from "../common.js";
 import { create_progress_chart } from "../charts/line.js";
 
 const form = document.forms[0];
-const [
-	ind_input,
-	p_input,
-	aa_chance_input,
-	Aa_chance_input,
-	AA_chance_input,
-	num_gens_input,
-	seed_input
-] = setup_inputs(form);
+setup_inputs(form);
+const form_elems = form.elements;
 
-const start_canvas   = /** @type {HTMLCanvasElement} */ (document.getElementById("start-graph"));
+const ind_input       = /** @type {HTMLInputElement} */ (form_elems.namedItem("ind"));
+const p_input         = /** @type {HTMLInputElement} */ (form_elems.namedItem("p"));
+const aa_chance_input = /** @type {HTMLInputElement} */ (form_elems.namedItem("hr-chance"));
+const Aa_chance_input = /** @type {HTMLInputElement} */ (form_elems.namedItem("he-chance"));
+const AA_chance_input = /** @type {HTMLInputElement} */ (form_elems.namedItem("hd-chance"));
+const num_gens_input  = /** @type {HTMLInputElement} */ (form_elems.namedItem("num-gens"));
+const seed_input      = /** @type {HTMLInputElement} */ (form_elems.namedItem("seed"));
+
+const start_canvas    = /** @type {HTMLCanvasElement} */ (document.getElementById("start-graph"));
 const progress_canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("progress-graph"));
 
 /** @type {Chart | null} */

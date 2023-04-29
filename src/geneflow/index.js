@@ -6,17 +6,17 @@ import { get_rand, setup_inputs, update_progress_chart } from "../common.js";
 import { create_progress_chart } from "../charts/line.js";
 
 const form = document.forms[0];
+setup_inputs(form);
+const form_elems = form.elements;
 
-const [
-	ind_input,
-	p_input,
-	aa_input,
-	Aa_input,
-	AA_input,
-	flow_input,
-	num_gens_input,
-	seed_input
-] = setup_inputs(form);
+const ind_input      = /** @type {HTMLInputElement} */ (form_elems.namedItem("ind"));
+const p_input        = /** @type {HTMLInputElement} */ (form_elems.namedItem("p"));
+const aa_input       = /** @type {HTMLInputElement} */ (form_elems.namedItem("gen-hr"));
+const Aa_input       = /** @type {HTMLInputElement} */ (form_elems.namedItem("gen-he"));
+const AA_input       = /** @type {HTMLInputElement} */ (form_elems.namedItem("gen-hd"));
+const flow_input     = /** @type {HTMLInputElement} */ (form_elems.namedItem("flow-rate"));
+const num_gens_input = /** @type {HTMLInputElement} */ (form_elems.namedItem("num-gens"));
+const seed_input     = /** @type {HTMLInputElement} */ (form_elems.namedItem("seed"));
 
 const start_canvas    = /** @type {HTMLCanvasElement} */ (document.getElementById("start-graph"));
 const progress_canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("progress-graph"));
@@ -49,11 +49,9 @@ form.addEventListener("submit", event => {
 	const frequency = [aa_amount, Aa_amount, AA_amount];
 	let gens;
 	if (flow_rate > 0) {
-		console.log("sfhisdhiosdhiosdfhoisdfh");
 		gens = runSelection(ind, p, num_gens, flow_rate, frequency, rand);
 	} else {
 		gens = runDrift(ind, p, num_gens, rand);
-		console.log("ufqecguicbadssknvbv");
 	}
 
 	update_progress_chart(gens, progress_chart);

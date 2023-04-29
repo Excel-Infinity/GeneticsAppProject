@@ -4,7 +4,6 @@ const invalid_class = "checked-invalid";
 
 /**
  * @param {HTMLFormElement} form the form whose inputs to set up
- * @returns {HTMLInputElement[]} the inputs that were in the form
  */
 function setup_inputs(form) {
 	const obj_inputs = Array.prototype.filter.call(form.elements, e => e instanceof HTMLInputElement);
@@ -17,8 +16,6 @@ function setup_inputs(form) {
 	form.addEventListener("submit", () => {
 		inputs.forEach(input => input.classList.remove(invalid_class))
 	});
-
-	return inputs;
 }
 
 /**
